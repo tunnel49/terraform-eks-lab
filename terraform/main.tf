@@ -11,6 +11,7 @@ terraform {
 
 provider "aws" {
   region = "eu-west-1"
+  profile = "910881736194_Administrator"
 }
 
 resource "aws_vpc" "eks_vpc1" {
