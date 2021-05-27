@@ -23,7 +23,7 @@ resource "aws_vpc" "eks_vpc1" {
 
 resource "aws_subnet" "eks_subnet1" {
   vpc_id = aws_vpc.eks_vpc1.id
-  cidr_block = "10.101.0.0/20"
+  cidr_block = "10.101.0.0/16"
   tags = {
     name = "tunnel49 lab"
   }
