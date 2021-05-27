@@ -1,6 +1,6 @@
 resource "aws_eks_cluster" "eks_cluster1" {
   name = "eks-cluster"
-  role_arn = "aws_iam_role.eks_role1.arn" 
+  role_arn = aws_iam_role.eks_role1.arn
 
   vpc_config {
     subnet_ids = [aws_subnet.eks_subnet1.id]
@@ -13,11 +13,11 @@ resource "aws_eks_cluster" "eks_cluster1" {
 }
 
 output "endpoint" {
-  value = aws_eks_cluster.eks_cluster.endpoint
+  value = aws_eks_cluster.eks_cluster1.endpoint
 }
 
 output "kubeconfig-certificate-authority-data" {
-  value = aws_eks_cluster.eks_cluster.certificate_authority[0].data
+  value = aws_eks_cluster.eks_cluster1.certificate_authority[0].data
 }
 
 

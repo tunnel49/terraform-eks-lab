@@ -1,8 +1,8 @@
 resource "aws_eks_node_group" "eks_nodegroup1" {
   cluster_name    = aws_eks_cluster.eks_cluster1.name
   node_group_name = "eks_cluster_nodes"
-  node_role_arn   = aws_iam_role.eks_role1.arn
-  subnet_ids      = aws_subnet.eks_subnet[*].id
+  node_role_arn   = aws_iam_role.eks_node_group_role1.arn
+  subnet_ids      = aws_subnet.eks_subnet1[*].id
 
   scaling_config {
     desired_size = 1
