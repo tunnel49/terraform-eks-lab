@@ -4,10 +4,16 @@ resource "aws_eks_node_group" "eks_nodegroup1" {
   node_role_arn   = aws_iam_role.eks_node_group_role1.arn
   subnet_ids      = aws_subnet.eks_subnet1[*].id
 
+
+  instance_types  = ["t3.medium"]
   scaling_config {
     desired_size = 1
     max_size = 1
     min_size = 1
+  }
+
+  lifecycle {
+    ignore_changes = [scaling_config[0].desired_size]
   }
 
   depends_on = [
