@@ -18,20 +18,17 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 
-resource "aws_vpc" "eks_vpc1" {
-  cidr_block = "10.101.0.0/16"
-  tags = {
-    name = "tunnel49 lab"
-  }
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  name    = "eks_vpc"
+  cidr    = "10.101.0.0/16"
+  
+  azs             = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
+  private_subnets = ["10.101.64.0/18","10.101.128.0/18","10.101.192.0/18"]
+  public_subnets  = ["10.101.1.0/24","10.101.2.0/24", "10.101.3.0/24"]
+
+  enable_nat_gateway = true
+  single_nat_gateway = false
+  one_nat_gateway_per_az = true
 }
 
-resource "aws_subnet" "eks_subnet1" {
-  count = 3
-  vpc_id = aws_vpc.eks_vpc1.id
-  availability_zone = data.aws_availability_zones.available.names[count.index]
-  cidr_block = cidrsubnet(aws_vpc.eks_vpc1.cidr_block, 2, count.index)
-
-  tags = {
-    name = "tunnel49 lab"
-  }
-}

@@ -2,14 +2,14 @@ resource "aws_eks_node_group" "eks_nodegroup1" {
   cluster_name    = aws_eks_cluster.eks_cluster1.name
   node_group_name = "eks_cluster_nodes"
   node_role_arn   = aws_iam_role.eks_node_group_role1.arn
-  subnet_ids      = aws_subnet.eks_subnet1[*].id
+  subnet_ids      = module.vpc.private_subnets
 
 
-  instance_types  = ["t3.medium"]
+  instance_types  = ["t2.xlarge"]
   scaling_config {
-    desired_size = 1
-    max_size = 1
-    min_size = 1
+    desired_size = 2 
+    max_size = 2
+    min_size = 2
   }
 
   lifecycle {
@@ -22,6 +22,7 @@ resource "aws_eks_node_group" "eks_nodegroup1" {
     aws_iam_role_policy_attachment.eks_node_group_role1-AmazonEC2ContainerRegistryReadOnly,
   ]
 }
+
 
 resource "aws_iam_role" "eks_node_group_role1" {
   name = "eks-node-group-role1"
